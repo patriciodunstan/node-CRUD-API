@@ -1,3 +1,5 @@
+const sequilize = require("./util/database ");
+
 express = require("express");
 bodyparser = require('body-parser');
 sequelize = require('./util/database ');
@@ -14,5 +16,29 @@ app.use((req, res, next) => {
     next();
 });
 
-//testr routes
+//test routes
+app.get('/', (req, res, next) => {
+    res.send('Hello World');
+});
+
+
+//CRUD routes
 app.use('/users', require('./routes/users'));
+
+//error handling
+app.use((error, req, res, next) => {
+    console.log(error);
+    const status = error.statusCode || 500;
+    const message = error.message;
+    res.status(status).json({message : message});
+});
+
+//sync database
+sequilize
+    .sync()
+    .then(result => {
+        console.log("Database connected");
+        app.listen(3000);
+    })
+    .catch(err => console.log(err));
+
