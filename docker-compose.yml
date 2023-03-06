@@ -7,7 +7,7 @@ services:
     image: francescoxx/node_live_app
     ports:
       - "3000.3000"
-    enviromment: 
+    environment: 
       - PG_DB=node_live_db
       - PG_USER=francesco
       - PG_PASSWORD=12345
@@ -20,12 +20,12 @@ node_db:
   image: postgres:12
   ports:
     - "5432:5432"
-  enviromment: 
+  environment: 
     - POSTGRES_DB=node_live_db
-    - POSTGRES_USER=francsco
+    - POSTGRES_USER=francesco
     - POSTGRES_PASSWORD=12345
-  volumenes:
-    -node_db_data:/var/lib/postgresql/data
+  volumes:
+    - node_db_data:/var/lib/postgresql/data
 
-volumenes:
+volumes:
   node_db_data: {}    
